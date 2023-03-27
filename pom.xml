@@ -17,6 +17,9 @@
         <module>license-api</module>
         <module>license-app</module>
         <module>license-client</module>
+        <module>license-sdk</module>
+        <module>license-rest</module>
+        <module>license-config</module>
     </modules>
 
 </project>

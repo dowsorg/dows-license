@@ -1,6 +1,7 @@
 package org.dows.license.client;
 
 import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dows.license.api.LicenseVerifyParam;
@@ -13,10 +14,9 @@ import org.springframework.stereotype.Component;
 /**
  * 在项目启动时安装证书
  */
+@Slf4j
 @Component
 public class LicenseCheckListener implements ApplicationListener<ContextRefreshedEvent> {
-    private static Logger logger = LogManager.getLogger(LicenseCheckListener.class);
-
     /**
      * 证书subject
      */
@@ -53,7 +53,7 @@ public class LicenseCheckListener implements ApplicationListener<ContextRefreshe
         ApplicationContext context = event.getApplicationContext().getParent();
         if (context == null) {
             if (StrUtil.isNotBlank(licensePath)) {
-                logger.info("++++++++ 开始安装证书 ++++++++");
+                log.info("++++++++ 开始安装证书 ++++++++");
                 LicenseVerifyParam param = new LicenseVerifyParam();
                 param.setSubject(subject);
                 param.setPublicAlias(publicAlias);
@@ -64,7 +64,7 @@ public class LicenseCheckListener implements ApplicationListener<ContextRefreshe
                 LicenseVerify licenseVerify = new LicenseVerify();
                 //安装证书
                 licenseVerify.install(param);
-                logger.info("++++++++ 证书安装结束 ++++++++");
+                log.info("++++++++ 证书安装结束 ++++++++");
             }
         }
     }
