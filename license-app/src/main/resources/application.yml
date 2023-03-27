@@ -1,0 +1,32 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /api
+
+dows:
+  license:
+    licensePath: E:/temps/findsoft/license.lic
+
+##swagger
+swagger:
+  package: org.dows.license.controller
+  host: 127.0.0.1:8090
+  title: License服务端
+  version: V1.0.0
+  description: API接口文档
+  license: License
+  licenseUrl: http://127.0.0.1:8090/
+  contact:
+    name: lait
+    url: http://127.0.0.1:8090/
+    email: lait.zhang@gmail.com
+
+logging:
+  level:
+    org.dows.license: debug
+
+
+
+
+
+
