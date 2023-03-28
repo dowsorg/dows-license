@@ -9,13 +9,20 @@ import org.dows.license.api.*;
 import org.dows.license.sdk.LicenseCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 /**
  * 用于生成证书文件，不能放在给客户部署的代码里
@@ -28,7 +35,7 @@ public class LicenseRest {
     /**
      * 证书生成路径
      */
-    @Value("${license.licensePath}")
+    @Value("${dows.license.licensePath}")
     private String licensePath;
 
 
@@ -78,6 +85,20 @@ public class LicenseRest {
 
         if (StrUtil.isBlank(param.getLicensePath())) {
             param.setLicensePath(licensePath);
+        }
+        try {
+            Files.createDirectories(Path.of(param.getLicensePath().substring(0,param.getLicensePath().lastIndexOf("/"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (StrUtil.isBlank(param.getPrivateKeysStorePath())) {
+            try {
+                File file = ResourceUtils.getFile("classpath:privateKeys.keystore");
+                param.setPrivateKeysStorePath(file.getAbsolutePath());
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
         }
 
         LicenseCreator licenseCreator = new LicenseCreator(param);

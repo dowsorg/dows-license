@@ -41,10 +41,7 @@ public class CustomLicenseManager extends LicenseManager {
      * @throws Exception
      */
     @Override
-    protected synchronized byte[] create(
-            LicenseContent content,
-            LicenseNotary notary)
-            throws Exception {
+    protected synchronized byte[] create(LicenseContent content, LicenseNotary notary) throws Exception {
         initialize(content);
         this.validateCreate(content);
         final GenericCertificate certificate = notary.sign(content);
@@ -61,10 +58,7 @@ public class CustomLicenseManager extends LicenseManager {
      * @throws Exception
      */
     @Override
-    protected synchronized LicenseContent install(
-            final byte[] key,
-            final LicenseNotary notary)
-            throws Exception {
+    protected synchronized LicenseContent install(final byte[] key, final LicenseNotary notary) throws Exception {
         final GenericCertificate certificate = getPrivacyGuard().key2cert(key);
 
         notary.verify(certificate);
@@ -85,8 +79,7 @@ public class CustomLicenseManager extends LicenseManager {
      * @throws Exception
      */
     @Override
-    protected synchronized LicenseContent verify(final LicenseNotary notary)
-            throws Exception {
+    protected synchronized LicenseContent verify(final LicenseNotary notary) throws Exception {
         GenericCertificate certificate = getCertificate();
 
         // Load license key from preferences,

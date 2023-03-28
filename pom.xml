@@ -20,6 +20,7 @@
         <module>license-sdk</module>
         <module>license-rest</module>
         <module>license-config</module>
+        <module>license-demo</module>
     </modules>
 
 </project>

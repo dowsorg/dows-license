@@ -1,11 +1,6 @@
 server:
-  port: 8090
-#  servlet:
-#    context-path: /api
+  port: 8091
 
-dows:
-  license:
-    licensePath: E:/temps/dows/license.lic
 
 ##swagger
 swagger:
